@@ -1,5 +1,4 @@
 % Archivo:      patrones-modificado.pl
-% Autor:        Kevin Lobo, Nicol Otarola, Meibel Ceciliano
 %
 % Descripción:  Busca patrones especiales en la comunicación con el usuario.
 
@@ -73,7 +72,7 @@ patronProblema([funcionar, X |_], X):- !.
 %~ daños
 patronProblema([esta, danado, X|_], X):- !.
 patronProblema([estan, danados, X|_], X):- !.
-patronProblema([esta, dañnda, X|_], X):- !.
+patronProblema([esta, danada, X|_], X):- !.
 patronProblema([se,dano, X|_], X):-!.
 patronProblema([se,danaron, X|_], X):-!.
 patronProblema([un,dano, X|_], X):-!.
