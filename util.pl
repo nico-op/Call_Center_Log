@@ -1,6 +1,4 @@
-% Archivo:      util.pl
-% Autor:        José Alejandro Ibarra Campos
-%
+
 % Descripción:  Funciones generales utilitarias para el programa de Prolog.
 
 % contiene(String, SubString)
