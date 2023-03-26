@@ -2,7 +2,7 @@
 % ***********************************************************************************************************************
 % Entradas iniciales
 
-saludos([ hola,buenas, tardes, días, buenos]).
+saludos([ hola,buenas, tardes, dias, buenos]).
 
 gracias([gracias, muchas_gracias, okay]).
 
@@ -13,48 +13,48 @@ dispositivos([computadora]).
 causas_db(computadora, [
         ['Su computadora no se encuentra conectada a la red wifi'],%Causa1
         ['El modem no funciona'], %Causa2
-        ['El cable del internet no está conectado a su computadora'], %Causa3
-        ['El cable de red está dañado'], %Causa5
+        ['El cable del internet no esta conectado a su computadora'], %Causa3
+        ['El cable de red esta danada'], %Causa5
         ['Cortes de electricidad en la zona por lo que se cae el internet'], %Causa6
-        ['Interrupción del servicio en la zona'], %Causa7
+        ['Interrupcion del servicio en la zona'], %Causa7
         ['El antivirus puede estar bloqueando el acceso a internet'], %Causa8
-        ['La dirección IP o el DNS pueden estar mal configurados'], %Causa9
+        ['La direccion IP o el DNS pueden estar mal configurados'], %Causa9
         ['No tiene instalados los drivers wifi'],%Causa10
         ['El adaptador de red de la computadora no funciona'],%Causa11
-        ['La tarjeta de red está dañada']%Causa12
+        ['La tarjeta de red esta danada']%Causa12
         ]).
 
 % ************************************************************************************************************************
 % Preguntas que el sistema va a realizar al usuario para determinar lo
 % que ocurre.
 preguntas_db(dispositivo,
-             [['¿Cuál es el dispositivo con el que tiene el problema?']]).
+             [['Cual es el dispositivo con el que tiene el problema?']]).
 
 preguntas_db(computadora,
-        [['¿Reviso que la computadora este conectada al wifi?'],%Pregunta1
-        ['¿Es la primera vez que conecta la computadora a internet?'],%Pregunta2
-        ['¿Está conectando por wifi?'], %Pregunta4
-        ['¿El modem está alumbrando?'], %Pregunta5
-        ['¿El modem está conectado al cable de red?'], %Pregunta6
-        ['¿El modem está conectado a la electricidad?'], %Pregunta7
-        ['¿Tiene instalados los drivers wifi?'], %Pregunta8
-        ['¿Su computadora se encuentra conectada por cable?'], %Pregunta9
-        ['¿El cable está conectado de manera correcta al modem?'], %Pregunta10
-        ['¿El cable está conectado de manera correcta a la computadora?'],%Pregunta11
-        ['¿La computadora reconoce el cable de red al conectarse??'],%Pregunta12
-        ['¿Han ocurrido cortes en el fluido electrico?'], %Pregunta13
-        ['¿Se han notificado interrupciones en el servicio?'],%Pregunta14
-        ['¿Su computadora tiene antivirus?'],%Pregunta15
-        ['¿Ha cambiado la dirección IP o el DNS?']%Pregunta16
+        [['Reviso que la computadora este conectada al wifi?'],%Pregunta1
+        ['Es la primera vez que conecta la computadora a internet?'],%Pregunta2
+        ['Esta conectando por wifi?'], %Pregunta4
+        ['El modem esta alumbrando?'], %Pregunta5
+        ['El modem esta conectado al cable de red?'], %Pregunta6
+        ['El modem esta conectado a la electricidad?'], %Pregunta7
+        ['Tiene instalados los drivers wifi?'], %Pregunta8
+        ['Su computadora se encuentra conectada por cable?'], %Pregunta9
+        ['El cable esta conectado de manera correcta al modem?'], %Pregunta10
+        ['El cable esta conectado de manera correcta a la computadora?'],%Pregunta11
+        ['La computadora reconoce el cable de red al conectarse??'],%Pregunta12
+        ['Han ocurrido cortes en el fluido electrico?'], %Pregunta13
+        ['Se han notificado interrupciones en el servicio?'],%Pregunta14
+        ['Su computadora tiene antivirus?'],%Pregunta15
+        ['Ha cambiado la direccion IP o el DNS?']%Pregunta16
         ]).
 
 
 % ****************************************************************************************************************************
 % Respuestas que brinda el sistema sobre saludos, despedidas, final de
-% la oración, respuestas aleatroias cuando no sabe la respuestas,
-% respuestas cunado no entiende lo que se le indicó.
+% la oracion, respuestas aleatroias cuando no sabe la respuestas,
+% respuestas cunado no entiende lo que se le indiciones.
 respuestas(saludos,
-        [['hola'], ['buenas,tardes'],['buenos, días'],
+        [['hola'], ['buenas,tardes'],['buenos, dias'],
         ['buenas, noches'], ['buenas'] ]).
 
 respuestas(despedida,
@@ -69,10 +69,10 @@ respuestas(con_gusto,
 
 
 respuestas(dispositivo,
-        [['¿Con qué dispositivo tiene problemas?']]).
+        [['Con que dispositivo tiene problemas?']]).
 
 respuestas(final_oracion,
-        [['¿te puedo ayudar en algo más?']]).
+        [['te puedo ayudar en algo mas?']]).
 
 respuestas(respuestas_aleatorias,
         [['sinceramente no tengo la respuesta'],
@@ -96,20 +96,20 @@ respuestas(computadora, [
         ['Debe llevar su computadora a que le cambien la tarjeta de red'], %Solucion8
         ['Debe limpiar el puerto y posteriormente intentar conectar el cable'], %Solucion9
         ['Espere que el servicio de luz e internet se restablezcan'], %Solucion10
-        ['Contacte a su compañía'], %Solucion11
-        ['Restablezca la configuración predeterminada del antivirus o reinstale el antivirus'], %Solucion12
-        ['Si cambio la configuración, restablezca la configuración predeterminada'] %Solucion13
+        ['Contacte a su compania'], %Solucion11
+        ['Restablezca la configuracion predeterminada del antivirus o reinstale el antivirus'], %Solucion12
+        ['Si cambio la configuracion, restablezca la configuracion predeterminada'] %Solucion13
  ]).
 
 respuestas(listo,
-        [['¿En qué te puedo ayudar?'],['¿Cómo te puedo ayudar?']]).
+        [['En que te puedo ayudar?'],['Como te puedo ayudar?']]).
 
 respuestas(problema,
-        [['Disculpe, no tengo solución a su problema, vuelva a intertarlo.']]).
+        [['Disculpe, no tengo solucion a su problema, vuelva a intertarlo.']]).
 
 % *********************************************************************************************************************************
 % Referencias que el sistema le puede brindar al usuario para que tenga
-% una idea más clara de como solucionar el problema.
+% una idea mas clara de como solucionar el problema.
 
 referencias(computadora, [
         ['https://eu.dlink.com/es/es/support/faq/routers/mydlink-routers/dir-880l/es_dir-880l_conectar_mi_ordenador_wi_fi_a_mi_router'], %Referencia1
