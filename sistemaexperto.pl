@@ -1,11 +1,11 @@
 % Archivo:      patrones-modificado.pl
 % Autor:        Kevin Lobo, Nicol Otarola, Meibel Ceciliano
 %
-% Descripción:  Busca patrones especiales en la comunicación con el usuario.
+% DescripciÃ³n:  Busca patrones especiales en la comunicaciÃ³n con el usuario.
 
 
 % patronConsulta/2
-% Busca patrones que indican que el usuario está realizando
+% Busca patrones que indican que el usuario estÃ¡ realizando
 % una consulta.
 
 % Consulta
@@ -25,14 +25,14 @@ patronConsulta([causas, X|_],X):-!.
 patronConsulta([causa, X|_],X):-!.
 patronConsulta([que, puede, causar, X|_],X):-!.
 
-% ¿Por qué?
+% Â¿Por quÃ©?
 patronConsulta([por, que, X|_],X):-!.
 
 patronConsulta([_|T],X):-
   patronConsulta(T,X).
 
 % patronReferencia/2
-% Busca patrones que indican que el usuario está solicitando
+% Busca patrones que indican que el usuario estÃ¡ solicitando
 % una Referencia.
 
 % Referencia
@@ -70,13 +70,13 @@ patronProblema([funciona, mal, X |_], X):- !.
 patronProblema([funcionan, mal, X |_], X):- !.
 patronProblema([funcionar, X |_], X):- !.
 
-%~ daños
-patronProblema([esta, dañado, X|_], X):- !.
-patronProblema([estan, dañados, X|_], X):- !.
-patronProblema([esta, dañada, X|_], X):- !.
-patronProblema([se,daño, X|_], X):-!.
-patronProblema([se,dañaron, X|_], X):-!.
-patronProblema([un,daño, X|_], X):-!.
+%~ daÃ±os
+patronProblema([esta, daÃ±ado, X|_], X):- !.
+patronProblema([estan, daÃ±ados, X|_], X):- !.
+patronProblema([esta, daÃ±ada, X|_], X):- !.
+patronProblema([se,daÃ±o, X|_], X):-!.
+patronProblema([se,daÃ±aron, X|_], X):-!.
+patronProblema([un,daÃ±o, X|_], X):-!.
 
 % Expresiones varias
 patronProblema([no, corre, X |_], X):-!.
@@ -172,6 +172,6 @@ patronCausa(audifonos, [estan, sucios, X |_], X, NS):- !, NS is 2.
 patronCausa(audifonos, [estan, viejos, X |_], X, NS):- !, NS is 1.
 
 
-% patronCausa( Dispositivo, Oración, Comparador, Número de Solución).
+% patronCausa( Dispositivo, OraciÃ³n, Comparador, NÃºmero de SoluciÃ³n).
 patronCausa(D, [_|T], X, NS):-
   patronCausa(D, T, X, NS).
