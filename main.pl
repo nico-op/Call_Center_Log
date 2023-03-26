@@ -9,7 +9,7 @@
  * -------------------------------------------------------*/
 
  % Modulos y archivos
- :- [base_datos, sistemaexperto, reader, bnf, util].
+ :- [base_datos, sistema_experto, reader, bnf, util].
  :- use_module(library(random)).
 
  % Variables que almacenan la información del Usuario
