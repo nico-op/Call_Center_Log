@@ -1,15 +1,7 @@
-/* --------------------------------------------------------
- * Archivo; chat.pl
- * Autores: José Alejandro Ibarra & Esteban Alvarado
- *
- * Descripción: Punto de entrada para el programa. Maneja
- *              la interfaz con el usuario, el análisis de
- *              entradas y sus respuestas.
- * versión: Sep 2019
- * -------------------------------------------------------*/
 
+%%%%*********
  % Modulos y archivos
- :- [base_datos, sistema_experto, reader, bnf, util].
+ :- [basedatos, sistemaexperto, reader, bnf, util].
  :- use_module(library(random)).
 
  % Variables que almacenan la información del Usuario
@@ -253,7 +245,7 @@ obtener_dispositivo(_):-
 % Realiza preguntas al usuario para determinar si conoce el problema
 conoce_el_problema:-
   imprimir_usuario(bot),write('Responde a la siguiente pregunta con SI o NO\n'),
-  write('�Conoces cual es tu problema?'),
+  write('Conoces cual es tu problema?'),
   readin(S),
   conoce_el_problema(S),!.
 
@@ -261,7 +253,7 @@ conoce_el_problema:-
 conoce_el_problema(S):-
   afirmativo(S), !,
   imprimir_usuario(bot),
-  write('Si lo sabes! Entonces dime cuál es!\n'),
+  write('Si lo sabes! Entonces dime cual es!\n'),
   imprimir_usuario(usuario),readin(M),append(M,[' n'],P),
   verificar_problema(P).
 
