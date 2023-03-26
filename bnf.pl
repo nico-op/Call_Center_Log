@@ -112,9 +112,9 @@ adjetivo([correcta|S], S).
 adjetivo([conectada|S], S).
 adjetivo([conectado|S], S).
 adjetivo([configurados|S], S).
-adjetivo([dañado|S], S).
-adjetivo([dañada|S], S).
-adjetivo([dañado|S], S).
+adjetivo([danado|S], S).
+adjetivo([danada|S], S).
+adjetivo([danado|S], S).
 adjetivo([disfuncional|S], S).
 adjetivo([electrico|S], S).
 adjetivo([funcional|S], S).
@@ -146,7 +146,7 @@ adjetivo([tu|S], S).
 %-----------------------------
 %        ADVERBIOS
 %-----------------------------
-% Los adverbios son una parte de la oración que complementa a un verbo,
+% Los adverbios son una parte de la oraciï¿½n que complementa a un verbo,
 % adjetivo, u otros adverbios e incluso oraciones.Se
 % necesitaran los siguientes:
 
@@ -166,8 +166,8 @@ adverbio([tambien|S], S).
 %-----------------------------
 %        DETERMINANTES
 %-----------------------------
-%Los artículos introducen a los sustantivos a los que acompañan y preceden
-% indicando su género (masculino, femenino), persona y número (singular,
+%Los articulos introducen a los sustantivos a los que acompanan y preceden
+% indicando su genero (masculino, femenino), persona y numero (singular,
 % plural).
 % %Articulos usados en la base de datos
 
@@ -220,7 +220,7 @@ pregunta([quien|S], S).
 %         PRONOMBRES
 %------------------------------
 % Los pronombres son palabras que reemplazan al sustantivo en
-% una oración y evitan tener que mencionarlo directamente.
+% una oraciï¿½n y evitan tener que mencionarlo directamente.
 %Los Pronombres personales que seran usados en la base de datos son:
 
 pronombre(sing,masc, tercera, [el|S], S).
@@ -261,8 +261,8 @@ sustantivo(sing,fem,[causa|S],S).
 sustantivo(sing,masc,[cable|S],S).
 sustantivo(sing,fem,[computadora|S],S).
 sustantivo(plu,masc,[cortes|S],S).
-sustantivo(sing,fem,[compañía|S],S).
-sustantivo(sing,fem,[configuración|S],S).
+sustantivo(sing,fem,[compania|S],S).
+sustantivo(sing,fem,[configuracion|S],S).
 sustantivo(sing,fem,[direccion|S],S).
 sustantivo(sing,masc,[dns|S],S).
 sustantivo(plu,masc,[drivers|S],S).
@@ -392,7 +392,7 @@ verbo(sing, tercera, [necesita|S], S).
 verbo(sing, segunda, [necesita|S], S).
 
 
-%Ñ
+%ï¿½
 
 %O
 verbo(sing,segunda,[ocurrido|S], S).
