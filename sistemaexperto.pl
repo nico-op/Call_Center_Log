@@ -111,8 +111,8 @@ patronProbRef(computadora,[cuando,hay,interrupcion, de, servicio, en, la, zona,X
 patronProbRef(computadora,[hay, cortes, de, electricidad, en, la, zona,y,se, cae,el,internet, X|_],X, [5]):- !.
 patronProbRef(computadora,[el, cable, de, red, esta, malo, X|_],X,[4]):- !.
 patronProbRef(computadora,[el, cable, de, internet, no, esta, conectado, a, la, computadora, X|_],X, [3]):- !.
-patronProbRef(computadora,[el, modem, no, funciona, X|_],X, [2]):- !.
-patronProbRef(computadora,[no, esta, conectada, al, wifi, X|_],X, [1]):- !.
+patronProbRef(computadora,[el, modem, no, funciona, X|_],X, 2):- !.
+patronProbRef(computadora,[no, esta, conectada, al, wifi, X|_],X,1):- !.
 
 
 patronProbRef(D,[_|T],X,N):-
@@ -124,17 +124,17 @@ patronProbRef(D,[_|T],X,N):-
 
 % Causas computadora
 
-patronCausa(computadora, [una,tarjeta,  de,  red, mala,  X |_], X, NS):-!, NS is 11.
-patronCausa(computadora, [cuando, el, adaptador, de, red, no, funciona, X |_], X, NS):-!, NS is 10.
-patronCausa(computadora, [cuando, no,  tiene,  instalados, los, drivers,  wifi, X |_], X, NS):-!, NS is 9.
-patronCausa(computadora, [la,  direccion,  ip , o,  dns, mal, configurados, X |_], X, NS):-!, NS is 8.
-patronCausa(computadora, [el, antivirus, puede,  estar , bloqueando, el, acceso, a , internet,  X |_], X, NS):-!, NS is 7.
+patronCausa(computadora, [una,tarjeta,  de,  red, mala,  X |_], X, NS):-!, NS is 1.
+patronCausa(computadora, [cuando, el, adaptador, de, red, no, funciona, X |_], X, NS):-!, NS is 2.
+patronCausa(computadora, [cuando, no,  tiene,  instalados, los, drivers,  wifi, X |_], X, NS):-!, NS is 3.
+patronCausa(computadora, [la,  direccion,  ip , o,  dns, mal, configurados, X |_], X, NS):-!, NS is 4.
+patronCausa(computadora, [el, antivirus, puede,  estar , bloqueando, el, acceso, a , internet,  X |_], X, NS):-!, NS is 5.
 patronCausa(computadora, [interrupcion, de,  servicio, en, la,  zona,  X |_], X, NS):-!, NS is 6.
-patronCausa(computadora,[cuando,hay, cortes, de, electricidad, en, la, zona,y, se, cae, el, internet, X |_], X, NS):-!, NS is 5.
-patronCausa(computadora, [el, cable, de, red, es, disfuncional, X |_], X, NS):-!, NS is 4.
-patronCausa(computadora, [no, esta, conectado, cable, ethernet, X |_], X, NS):-!, NS is 3.
-patronCausa(computadora, [no, funciona, wifi, X |_], X, NS):-!, NS is 2.
-patronCausa(computadora, [no, esta, conectada, al, wifi, X |_], X, NS):-!, NS is 1.
+patronCausa(computadora,[cuando,hay, cortes, de, electricidad, en, la, zona,y, se, cae, el, internet, X |_], X, NS):-!, NS is 7.
+patronCausa(computadora, [el, cable, de, red, es, disfuncional, X |_], X, NS):-!, NS is 8.
+patronCausa(computadora, [no, esta, conectado, cable, ethernet, X |_], X, NS):-!, NS is 9.
+patronCausa(computadora, [no, funciona, el,wifi, X |_], X, NS):-!, NS is 10.
+patronCausa(computadora, [no, esta, conectada, al, wifi, X |_], X, NS):-!, NS is 11.
 
 
 
