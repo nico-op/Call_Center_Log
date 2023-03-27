@@ -1,17 +1,19 @@
 
-%%%%*********
+%--------------------------------------------------------------------
+%                  MAIN - SISTEMA EXPERTO(Brinda Respuesta)
+%--------------------------------------------------------------------
  % Modulos y archivos
- :- [basedatos, sistemaexperto, reader, bnf, util].
+ :- [basedatos,sistemaexperto,reader,bnf,funciones].
  :- use_module(library(random)).
 
- % Variables que almacenan la información del Usuario
+ % Variables que almacenan la informaciÃ³n del Usuario
  :- dynamic dispositivo/1,
             solicitud/1.
 
 %----------------------- INICIO --------------------------
 
 % consultar/0
-% Inicia una conversación con el bot.
+% Inicia una conversaciÃ³n con el bot.
 consultar:-
   saludar,
   conversacion.
@@ -39,12 +41,13 @@ conversacion:-
   imprimir_usuario(bot),
   imprimir_lista(R),
     salir(S),!.
+%Se elimino print report
 
 
 %--------------------- RESPUESTAS ------------------------
 
 % A) RESPUESTAS A UNA CONSULTA
-% Si en la misma frase el usuario ya indicó el dispositivo
+% Si en la misma frase el usuario ya indica el dispositivo
 generar_respuesta(S,R):-
   patronConsulta(S,_),
   verificar_dispositivo(S),!,
@@ -53,7 +56,7 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si no lo introduce, en la consulta, se procede a preguntarlo
+% Si menciona el dispositivo, en la consulta, se procede a preguntarlo
 generar_respuesta(S,R):-
   patronConsulta(S,_),!,
   assert(solicitud(consulta)),
@@ -62,25 +65,26 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% B) RESPUESTAS A UNA REFERENCIA
+%Parte lista
 
-% Si en la misma frase el usuario ya indicó el dispositivo y el problema
+% B) RESPUESTAS A UNA REFERENCIA
+% Si en la misma frase el usuario ya indica el dispositivo y el problema
 generar_respuesta(S,R):-
   patronReferencia(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
   assert(solicitud(referencia)),
-  imprimir_usuario(bot),write('Esta referencia puede serte útil: '),
+  imprimir_usuario(bot),write('Esta referencia puede serte Ãºtil: '),
   brindar_referencia(N),
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si en la misma frase el usuario ya indicó el dispositivo y el problema
+% Si en la misma frase el usuario ya indica el dispositivo y el problema
 generar_respuesta(S,R):-
   patronReferencia(S,_),
   verificar_dispositivo(S),
   es_caso_especial(S,N),!,
   assert(solicitud(referencia)),
-  imprimir_usuario(bot),write('Estas referencias te ayudaran: \n'),
+  imprimir_usuario(bot),write('Estas referencias te ayudarÃ¡n: \n'),
   brindar_referencia(N),
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
@@ -106,7 +110,7 @@ generar_respuesta(S,R):-
 % C) RESPUESTAS A UN PROBLEMA
 
 % El usuario indica que tiene un problema, el dispositivo y dice cual
-% es la causa (sea específica o general).
+% es la causa (sea especifica o general).
 generar_respuesta(S,R):-
   patronProblema(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
@@ -157,29 +161,6 @@ generar_respuesta(S, R):-
   respuestas(agradecido, Res),
   respuesta_aleatoria(Res, R).
 
-% Pregunta por el nombre del bot
-generar_respuesta(S, R):-
-  patronNombre(S, _), !,
-  respuestas(mi_nombre, D),
-  respuesta_aleatoria(D, R).
-
-% Preguntando sobre lo que estudio
-generar_respuesta(S, R):-
-  patronEstudios(S, _), !,
-  respuestas(mi_estudio, D),
-  respuesta_aleatoria(D, R).
-
-% Preguntando por el estado del programa
-generar_respuesta(S, R):-
-  patronYo(S, _), !,
-  respuestas(yo, D),
-  respuesta_aleatoria(D, R).
-
-% Responder algo aleatorio
-generar_respuesta(S, R):-
-  buscar_pregunta(S), !,
-  respuestas(respuestas_aleatorias, Res),
-  respuesta_aleatoria(Res, R).
 
 % Detectar pregunta con por qué
 generar_respuesta(S, R):-
@@ -187,11 +168,6 @@ generar_respuesta(S, R):-
   respuestas(preguntas_aleatorias,PA),
   respuesta_aleatoria(PA,R).
 
-% Detectar frase válida y responder algo random
-generar_respuesta(S, R):-
-	oracion(S,_), !,
-  respuestas(respuestas_aleatorias,PA),
-  respuesta_aleatoria(PA,R).
 
 % Si el usuario ingresa una incoherencia
 generar_respuesta(_,R):-
@@ -209,9 +185,8 @@ respuesta_aleatoria(Res, R):-
     nElemento(Res, Rand, R).
 
 %----------------------- OBTENER -------------------------
-
 % ofrecer_ayuda/0
-% Funciona como un paso para entrar a la conversación.
+% Funciona como un paso para entrar a la conversaciÃ³n.
 ofrecer_ayuda:-
   respuestas(listo,RL),
   respuesta_aleatoria(RL,R),
@@ -219,7 +194,7 @@ ofrecer_ayuda:-
   imprimir_lista(R).
 
 % obtener_dispositivo/0
-% Le pide al usuario un dispositivo válido.
+% Le pide al usuario un dispositivo vÃ¡lido.
 obtener_dispositivo:-
   preguntas_db(dispositivo,LP),
   respuesta_aleatoria(LP,P),
@@ -227,7 +202,7 @@ obtener_dispositivo:-
   imprimir_usuario(usuario),readin(S),
   obtener_dispositivo(S).
 
-% Clausa de salida del bucle de detección de problemas
+% Clausa de salida del bucle de detecciÃ³n de problemas
 obtener_dispositivo(D):-
   member('salir',D), !,fail.
 
@@ -249,11 +224,11 @@ conoce_el_problema:-
   readin(S),
   conoce_el_problema(S),!.
 
-% Si Sí conoce el problema, solicita la causa y luego lo soluciona
+% Si se conoce el problema, solicita la causa y luego lo soluciona
 conoce_el_problema(S):-
   afirmativo(S), !,
   imprimir_usuario(bot),
-  write('Si lo sabes! Entonces dime cual es!\n'),
+  write('Si conoce el problema, mencionar el problema presentado en el dispositivo\n'),
   imprimir_usuario(usuario),readin(M),append(M,[' n'],P),
   verificar_problema(P).
 
@@ -261,10 +236,10 @@ conoce_el_problema(S):-
 conoce_el_problema(S):-
   negativo(S), !,
   imprimir_usuario(bot),
-  write('¡No lo sabes! Bueno, vamos a encontrarlo!\n'),
+  write('Bueno, vamos a encontrar el problema!\n'),
   obtener_problema.
 
-% Clausa de salida del bucle de detección de problemas
+% Clausa de salida del bucle de deteccion de problemas
 conoce_el_problema(S):-
   member('salir',S), !.
 
@@ -364,7 +339,7 @@ brindar_solucion(N):-
   imprimir_seleccion(LRF,N),!.
 
 %----------------------- AUX FX --------------------------
-% Nota: en un predicado se usa la notación:
+% Nota: en un predicado se usa la notaciÃ³n:
 % nombre/(numero de args)
 
 % imprimir_usuario/1
@@ -373,11 +348,11 @@ imprimir_usuario(bot):-
     nombre_bot(X), write(X), write(': '), flush_output.
 imprimir_usuario(usuario):-
     n_usuario(X), write(X), write(': '), flush_output.
-nombre_bot('Call_Center_Log').
+nombre_bot('CallCenterLog').
 n_usuario('Usuario').
 
 % buscar_saludo/1
-% Verifica si la oración es un saludo en la DB
+% Verifica si la oraciÃ³n es un saludo en la DB
 buscar_saludo(S):-
   saludos(D),
   interseca(S, D, A),
@@ -389,13 +364,12 @@ buscar_pregunta(S):-
   member('?',S).
 
 % buscar_gracias/1
-% Verifica si la oración es de agradecimiento en la DB
+% Verifica si la oraciÃ³n es de agradecimiento en la DB
 buscar_gracias(S):-
   gracias(D),
   interseca(S, D, A),
   A \== [].
 
-%-------------------------- Respuesta Afirmativo/Negativo---------------------
 % afirmativo/1
 % Retorna verdadero si el usuario responde SI
 afirmativo(S):-
@@ -406,11 +380,12 @@ afirmativo(S):-
 negativo(S):-
   member('no',S).
 
-%-------------------------- Despesdidad ---------------------
 % salir/1
 % Verifica si la entrada contiene la frase de despedida
 salir(S):-
     subset([adios], S).
+
+%modificado-se quitó nombre
 
 % verificar_dispositivo/1
 % Verifica si el dispositivo es valido, y lo agrega a la base de datos actual.
@@ -438,18 +413,16 @@ verificar_problema(_):-
   imprimir_lista(RA),fail.
 
 % es_causa/2
-% Indica si en una oración se da una causa principal
+% Indica si en una oraciÃ³n se da una causa principal
 es_causa(S,N):-
   dispositivo(D),nElemento(D,1,Disp),
   patronCausa(Disp,S,_,N).
 
 % es_caso_especial/?
-% Indica si se hace request de un problema específico
+% Indica si se hace request de un problema especÃ­fico
 es_caso_especial(S,N):-
   dispositivo(D),nElemento(D,1,Disp),
   patronProbRef(Disp,S,_,N).
-
-
 %------------------ FIN DEL CODIGO ----------------------
 
 :- consultar.
