@@ -1,13 +1,15 @@
-% ---------------------------------------
-%           BASE DE DATOS
-% ---------------------------------------
+%Base de datos sobre una computadora que no se conecta a internet.
+% ************************************************************************
+
+% En esta seccion se encuentran las respuestas que el sistema le va a
+% brindar al usuario en cuanto a despedidas, saludos, tipo de
+% dispositivo, agradecimiento y final de la oracion.
 
 respuestas(despedida, [
         ['Adios!'],
         ['Hasta pronto'],
         ['Nos vemos']
         ]).
-%Se dejaron 3 despesdidas
 
 respuestas(saludo, [
         ['Hola!'],
@@ -41,9 +43,8 @@ respuestas(incompresion,[
         ['Disculpe, intente de nuevo']
         ]).
 
-% BASE DE DATOS DE RESPUESTAS
-% LAS SOLUCIONES A PROBLEMAS SE NUMERAN CON S + NUMERO DE SOLUCION DE LA TABLA CSR
-
+% En esta seccion se encuentran las respuestas que genera al sistema y
+% le da como solución al usuario
 
 respuestas(computadora, [
         ['Debe llevar su computadora a que le cambien la tarjeta de red'],
@@ -59,7 +60,8 @@ respuestas(computadora, [
         ['Conecte la computadora a la red wifi']
         ]).
 
-%Respuesta computadora es la unica base de datos
+% Respuesta que brinda el sistema para ofrecer ayuda y cuand no tiene la
+% solucion a un problema
 respuestas(listo, [
                ['En que te puedo ayudar?'],
                ['Como te puedo ayudar?']
@@ -70,8 +72,8 @@ respuestas(problema, [
                vuelva a intertarlo.']
            ]).
 
-% BASE DE DATOS DE CAUSAS
-
+% En esta seccion se encuentran las causas que el sistema tiene sobre el
+% problema
 causas_base(computadora, [
         ['La tarjeta de red esta danada'],
         ['El adaptador de red de la computadora no funciona'],
@@ -86,9 +88,8 @@ causas_base(computadora, [
         ['Su computadora no se encuentra conectada a la red wifi']
         ]).
 
-% BASE DE DATOS DE PREGUNTAS.
-% LAS CAUSAS DE PROBLEMAS SE NUMERAN CON C + NÃƒÅ¡MERO DE CAUSA DE LA TABLA CSR.
-
+% En esta parte, se encuentran las preguntas que el sistema le hace al
+% usuario para determianar la raiz del problema
 preguntas_base(dispositivo,
              [['Cual es el dispositivo con el que tiene el problema?']]).
 
@@ -106,9 +107,8 @@ preguntas_base(computadora,
         ['Reviso que la computadora este conectada al wifi?']
         ]).
 
-% BASE DE DATOS DE REFERENCIAS
-% LAS REFERENCIAS SE NUMERAN COMO R + NUMERO DE REFERENCIA EN TABLA CSR.
-
+% Esta parte es dedicada a enlaces bibliograficos que respaldan las
+% soluciones
 referencias(computadora, [
         ['https://www.redeszone.net/noticias/wifi/motivos-cambiar-tarjeta-wifi-pc/'],
         ['https://support.microsoft.com/es-es/windows/solucionar-problemas-de-conexi%C3%B3n-ethernet-en-windows-2311254e-cab8-42d6-90f3-cb0b9f63645f#:~:text=Abra%20Configuraci%C3%B3n%20%3E%20red%20%26%20Internet%20%3E,Ethernet%20para%20ver%20si%20funciona.'],
@@ -122,8 +122,9 @@ referencias(computadora, [
         ['https://ayudaysoporte.personal.com.ar/app/answers/detail/a_id/6259/~/manual-de-autoinstalaci%C3%B3n-de-m%C3%B3dem'],
         ['https://support.microsoft.com/es-es/windows/conectarse-a-una-red-wi-fi-en-windows-1f881677-b569-0cd5-010d-e3cd3579d263']
          ]).
-% DEFINICION DE ENTRADAS
 
+
+%Se establecen las entradas para el inicio de la conversación
 saludos([hola,buenas_tardes,buenos_dias]).
 
 gracias([gracias,muchas_gracias,okay, entendido]).
