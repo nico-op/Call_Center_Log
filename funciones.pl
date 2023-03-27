@@ -85,7 +85,7 @@ sub_lista(S, L) :-
     append(S, _, L2).
 
 %--------------------------------------------
-%        sub_conjunto(sub_conjunto, Set)
+%        sub_conjunto(sub_conjunto, conjunto)
 %-------------------------------------------- 
 % Funcion verifica que el sub_conjunto sea parte del conjunto, devuelve un true
 sub_conjunto([], _).
