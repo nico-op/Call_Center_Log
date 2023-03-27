@@ -72,7 +72,7 @@ respuestas(problema, [
 
 % BASE DE DATOS DE CAUSAS
 
-causas_db(computadora, [
+causas_base(computadora, [
         ['La tarjeta de red esta danada'],
         ['El adaptador de red de la computadora no funciona'],
         ['No tiene instalados los drivers wifi'],
@@ -89,10 +89,10 @@ causas_db(computadora, [
 % BASE DE DATOS DE PREGUNTAS.
 % LAS CAUSAS DE PROBLEMAS SE NUMERAN CON C + NÃšMERO DE CAUSA DE LA TABLA CSR.
 
-preguntas_db(dispositivo,
+preguntas_base(dispositivo,
              [['Cual es el dispositivo con el que tiene el problema?']]).
 
-preguntas_db(computadora,
+preguntas_base(computadora,
         [ ['Le aparecen las redes disponibles?'],
         ['Le han dado mantenimiento a los adaptadores ultimamente?'],
         ['Tiene instalados los drivers wifi?'],

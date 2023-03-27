@@ -195,7 +195,7 @@ ofrecer_ayuda:-
 % obtener_dispositivo/0
 % Le pide al usuario un dispositivo vÃ¡lido.
 obtener_dispositivo:-
-  preguntas_db(dispositivo,LP),
+  preguntas_base(dispositivo,LP),
   respuesta_aleatoria(LP,P),
   imprimir_usuario(bot),mostrar_lista(P),
   imprimir_usuario(usuario),readin(S),
@@ -253,7 +253,7 @@ obtener_problema:-
   imprimir_usuario(bot),
   write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
   dispositivo(D),n_elemento(D,1,Disp),
-  preguntas_db(Disp,PP),
+  preguntas_base(Disp,PP),
   length(PP,N),obtener_problema(N).
 
 % obtener_problema/1
@@ -264,7 +264,7 @@ obtener_problema(0):-
 obtener_problema(N):-
   integer(N),!,
   dispositivo(D),n_elemento(D,1,Disp),
-  preguntas_db(Disp,PP),
+  preguntas_base(Disp,PP),
   n_elemento(PP,N,PG),
   imprimir_usuario(bot),
   mostrar_lista(PG),
@@ -296,7 +296,7 @@ resolver_consulta:-
   imprimir_usuario(bot),
   write('Es posible que su problema se deba a las siguientes causas:\n'),
   dispositivo(D),n_elemento(D,1,Disp),
-  causas_db(Disp,LS),
+  causas_base(Disp,LS),
   length(LS,N),
   mostrar_listacero(N,LS),!.
 
