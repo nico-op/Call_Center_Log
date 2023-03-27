@@ -36,13 +36,11 @@ conversacion:-
   repeat,
   imprimir_usuario(usuario),
   readin(S),
-  append(S,[' n'],M), % Evita el
+  append(S,[' n'],M),
   generar_respuesta(M,R),
   imprimir_usuario(bot),
   imprimir_lista(R),
     salir(S),!.
-%Se elimino print report
-
 
 %--------------------- RESPUESTAS ------------------------
 
@@ -73,7 +71,7 @@ generar_respuesta(S,R):-
   patronReferencia(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
   assert(solicitud(referencia)),
-  imprimir_usuario(bot),write('Esta referencia puede serte Ãºtil: '),
+  imprimir_usuario(bot),write('Esta referencia puede ayudarte a resolver el problema: '),
   brindar_referencia(N),
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
@@ -84,7 +82,7 @@ generar_respuesta(S,R):-
   verificar_dispositivo(S),
   es_caso_especial(S,N),!,
   assert(solicitud(referencia)),
-  imprimir_usuario(bot),write('Estas referencias te ayudarÃ¡n: \n'),
+  imprimir_usuario(bot),write('Estas referencias te pueden ser utiles: \n'),
   brindar_referencia(N),
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
@@ -219,8 +217,8 @@ obtener_dispositivo(_):-
 % conoce_el_problema/0
 % Realiza preguntas al usuario para determinar si conoce el problema
 conoce_el_problema:-
-  imprimir_usuario(bot),write('Responde a la siguiente pregunta con SI o NO\n'),
-  write('Conoces cual es tu problema?'),
+  imprimir_usuario(bot),write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
+  write('Tiene una idea de cual es su problema?\n'),
   readin(S),
   conoce_el_problema(S),!.
 
@@ -228,7 +226,7 @@ conoce_el_problema:-
 conoce_el_problema(S):-
   afirmativo(S), !,
   imprimir_usuario(bot),
-  write('Si conoce el problema, mencionar el problema presentado en el dispositivo\n'),
+  write('Si conoce el problema, escribalo a continuacion: \n'),
   imprimir_usuario(usuario),readin(M),append(M,[' n'],P),
   verificar_problema(P).
 
@@ -236,7 +234,7 @@ conoce_el_problema(S):-
 conoce_el_problema(S):-
   negativo(S), !,
   imprimir_usuario(bot),
-  write('Bueno, vamos a encontrar el problema!\n'),
+  write(' No hay problema,le ayudare a encontrarlo\n'),
   obtener_problema.
 
 % Clausa de salida del bucle de deteccion de problemas
@@ -246,13 +244,13 @@ conoce_el_problema(S):-
 % Si el usuario no ingresa si o no, le pide que ingrese una
 conoce_el_problema(_):-
   imprimir_usuario(bot),
-  write('No respondiste con SI o NO, intentalo de nuevo'),
+  write('Es necesario que responda las preguntas con "si" o "no". Intente nuevamente'),
   readin(S), conoce_el_problema(S).
 
 % obtener_problema/0
 obtener_problema:-
   imprimir_usuario(bot),
-  write('Responde a las siguientes preguntas con SI o NO\n'),
+  write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
   dispositivo(D),nElemento(D,1,Disp),
   preguntas_db(Disp,PP),
   length(PP,N),obtener_problema(N).
@@ -260,7 +258,7 @@ obtener_problema:-
 % obtener_problema/1
 obtener_problema(0):-
   imprimir_usuario(bot),
-  write('Lo lamento, parece que tu problema no se encuentra en mi base datos.\n'),!.
+  write('Lo sentimos, no puedo encontrar su problema en mi base de datosLo lamento\n'),!.
 
 obtener_problema(N):-
   integer(N),!,
@@ -286,7 +284,7 @@ obtener_problema(S,_):-
 
 obtener_problema(_,_):-
   imprimir_usuario(bot),
-  write('No respondiste con SI o NO, intentalo de nuevo'),
+  write('Es necesario que responda las preguntas con "si" o "no". Intente nuevamente'),
   readin(S), obtener_problema(S).
 
 %----------------------- Q/A FX --------------------------
@@ -295,7 +293,7 @@ obtener_problema(_,_):-
 % Muestra al usuario las causas de un problema con su dispositivo
 resolver_consulta:-
   imprimir_usuario(bot),
-  write('Las posibles causas de su problema son: \n'),
+  write('Es posible que su problema se deba a las siguientes causas:\n'),
   dispositivo(D),nElemento(D,1,Disp),
   causas_db(Disp,LS),
   length(LS,N),
@@ -304,7 +302,7 @@ resolver_consulta:-
 % brindar_referencias/0
 % Brinda al usuario todas las referencias de un dispositivo.
 brindar_referencias:-
-  imprimir_usuario(bot),write('Esta referencias pueden ayudarte con tu problema: \n'),
+  imprimir_usuario(bot),write('Esta referencia podria ayudarle con su problema: \n'),
   dispositivo(D),nElemento(D,1,Disp),
   referencias(Disp,LR),
   length(LR,N),imprimir_ul(N,LR),!.

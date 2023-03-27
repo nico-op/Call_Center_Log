@@ -54,7 +54,8 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si menciona el dispositivo, en la consulta, se procede a preguntarlo
+% Si no menciona el dispositivo, en la consulta, se procede a
+% preguntarlo
 generar_respuesta(S,R):-
   patronConsulta(S,_),!,
   assert(solicitud(consulta)),
@@ -218,7 +219,7 @@ obtener_dispositivo(_):-
 % Realiza preguntas al usuario para determinar si conoce el problema
 conoce_el_problema:-
   imprimir_usuario(bot),write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
-  write('Tiene una idea de cual es su problema?'),
+  write('Tiene una idea de cual es su problema?\n'),
   readin(S),
   conoce_el_problema(S),!.
 
