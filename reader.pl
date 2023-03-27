@@ -1,7 +1,7 @@
 
 
 %---------------------------
-%       READER (Lector)
+%       Reader (Lector)
 %----------------------------
 
 % La funcion que tiene el reader es devolver una lista que contiene de
@@ -80,7 +80,7 @@ digit(K):-K>47,K<58.
 % minuscula. En codigo ascii 65-90
 lc(K,K1):-K>64,K<91,!,K1 is K+32.
 
-% Esto permite que callcenterlog detecte la "�" el valor en ascii es 241
+% Esto permite que callcenterlog detecte la "ñ" el valor en ascii es 241
 lc(K,K1):-K=209,!,K1 is 241.
 
 % Si el programa detecta que lo ingresado ya se encuentra en minuscula
