@@ -2,24 +2,36 @@
 %--------------------------------------------------------------------
 %                  MAIN - SISTEMA EXPERTO(Brinda Respuesta)
 %--------------------------------------------------------------------
- % Modulos y archivos
+ 
+ 
+%----------------------------------------------
+%     import archivos/libreria
+%     variables dinamicas
+%----------------------------------------------
  :- [basedatos,sistemaexperto,reader,bnf,funciones].
  :- use_module(library(random)).
-
- % Variables que almacenan la informaciÃ³n del Usuario
  :- dynamic dispositivo/1,
             solicitud/1.
 
-%----------------------- INICIO --------------------------
+%-----------------------------------------------------------
+%             Estructura Principal
+%-----------------------------------------------------------
 
-% consultar/0
-% Inicia una conversacion con el bot.
+%----------------------------------------------
+%             consultar/0
+%----------------------------------------------
+% Permite iniciar una conversacion con CallCenterLog
+
 consultar:-
   saludar,
   conversacion.
 
-% saludar/0
-% Saluda al usuario con una frase de saludo aleatoria.
+
+%----------------------------------------------
+%             saludar/0
+%----------------------------------------------
+% Permite iniciar el saludo al usuario
+
 saludar:-
   respuestas(saludo, D),
   respuesta_aleatoria(D, W),
@@ -29,9 +41,12 @@ saludar:-
   readin(_),
   ofrecer_ayuda.
 
-% conversacion/0
-% Ciclo de backtracking principal. Se repite hasta que el
-% usuario se despide.
+
+%----------------------------------------------
+%             conversacion/0
+%----------------------------------------------
+% Inicia la conversación donde busca la solucion/consulta/referencia que el usuario solicita.
+
 conversacion:-
   repeat,
   imprimir_usuario(usuario),
@@ -42,10 +57,14 @@ conversacion:-
   mostrar_lista(R),
     salir(S),!.
 
-%--------------------- RESPUESTAS ------------------------
+%-----------------------------------------------------------
+%             Seccion Respuestas
+%-----------------------------------------------------------
 
-% A) RESPUESTAS A UNA CONSULTA
-% Si en la misma frase el usuario ya indica el dispositivo
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario indica el dispositivo en la oracion
 generar_respuesta(S,R):-
   modeloConsulta(S,_),
   verificar_dispositivo(S),!,
@@ -54,8 +73,10 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si no menciona el dispositivo, en la consulta, se procede a
-% preguntarlo
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario no indica el dispositivo en la oracion
 generar_respuesta(S,R):-
   modeloConsulta(S,_),!,
   assert(solicitud(consulta)),
@@ -64,10 +85,15 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-%Parte lista
 
-% B) RESPUESTAS A UNA REFERENCIA
-% Si en la misma frase el usuario ya indica el dispositivo y el problema
+%-----------------------------------------------------------
+%             Seccion Referencias
+%-----------------------------------------------------------
+
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario indica el dispositivo en la oracion y menciona el problema
 generar_respuesta(S,R):-
   modeloReferencia(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
@@ -77,7 +103,10 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si en la misma frase el usuario ya indica el dispositivo y el problema
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario indica el dispositivo en la oracion y menciona el problema
 generar_respuesta(S,R):-
   modeloReferencia(S,_),
   verificar_dispositivo(S),
@@ -88,7 +117,10 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si el usuario solo brinda el dispositivo
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario indica solamente el dispositivo
 generar_respuesta(S,R):-
   modeloReferencia(S,_),
   verificar_dispositivo(S),!,
@@ -97,7 +129,10 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% Si no dice ni dispositivo, ni problema se brindan todas.
+%--------------------------
+%    generar_respuesta
+%--------------------------
+% Donde el usuario no indica el dispositivo, tampoco menciona el problema
 generar_respuesta(S,R):-
   modeloReferencia(S,_),!,
   assert(solicitud(referencia)),
@@ -106,8 +141,9 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-% C) RESPUESTAS A UN PROBLEMA
-
+%-----------------------------------------------------------
+%             Seccion Respuesta a Problemas
+%-----------------------------------------------------------
 % El usuario indica que tiene un problema, el dispositivo y dice cual
 % es la causa (sea especifica o general).
 generar_respuesta(S,R):-
@@ -124,6 +160,9 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % El usuario indica que tiene un problema y el dispositivo.
 generar_respuesta(S,R):-
   modeloProblema(S,_), verificar_dispositivo(S),!,
@@ -132,6 +171,9 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % El usuario solo indica que tiene un problema.
 generar_respuesta(S,R):-
   modeloProblema(S,_), !,
@@ -141,41 +183,58 @@ generar_respuesta(S,R):-
   respuestas(fin_oracion,LR),
   respuesta_aleatoria(LR,R).
 
-%--------------------------------------------------------
+%------------------------------------------------
+%               CASOS ESPECIFICOS
+%------------------------------------------------
+
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % buscar despedida "adios"
 generar_respuesta(S, R):-
   salir(S), !,
 	respuestas(despedida, Res),
 	respuesta_aleatoria(Res, R).
 
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % Buscar frase de saludo
 generar_respuesta(S, R):-
   buscar_saludo(S), !,
 	respuestas(saludo, Res),
 	respuesta_aleatoria(Res, R).
 
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % Buscar frase de agradecimiento
 generar_respuesta(S, R):-
   buscar_gracias(S), !,
   respuestas(agradecido, Res),
   respuesta_aleatoria(Res, R).
 
-
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % Detectar pregunta con por qué
 generar_respuesta(S, R):-
 	oracion(S,_), buscar_pregunta(S), !,
   respuestas(preguntas_aleatorias,PA),
   respuesta_aleatoria(PA,R).
 
-
+%--------------------------
+%    generar_respuesta
+%--------------------------
 % Si el usuario ingresa una incoherencia
 generar_respuesta(_,R):-
   respuestas(incompresion,RL),
   respuesta_aleatoria(RL,R).
 
 %---------------------------------------------------------
-
-% respuesta_aleatoria/2
+%--------------------------
+%   respuesta_aleatoria/2
+%--------------------------
 % Escoge una respuesta aleatoria de una lista de respuestas.
 respuesta_aleatoria(Res, R):-
     length(Res, Longitud),
@@ -184,7 +243,9 @@ respuesta_aleatoria(Res, R):-
     n_elemento(Res, Rand, R).
 
 %----------------------- OBTENER -------------------------
-% ofrecer_ayuda/0
+%--------------------------
+%   ofrecer_ayuda/0
+%--------------------------
 % Funciona como un paso para entrar a la conversaciÃ³n.
 ofrecer_ayuda:-
   respuestas(listo,RL),
@@ -192,7 +253,9 @@ ofrecer_ayuda:-
   imprimir_usuario(bot),
   mostrar_lista(R).
 
-% obtener_dispositivo/0
+%--------------------------
+%   obtener_dispositivo/0
+%--------------------------
 % Le pide al usuario un dispositivo vÃ¡lido.
 obtener_dispositivo:-
   preguntas_base(dispositivo,LP),
@@ -201,7 +264,7 @@ obtener_dispositivo:-
   imprimir_usuario(usuario),readin(S),
   obtener_dispositivo(S).
 
-% Clausa de salida del bucle de detecciÃ³n de problemas
+% permite salir del bucle de preguntas realizadas al usuario
 obtener_dispositivo(D):-
   member('salir',D), !,fail.
 
@@ -215,7 +278,9 @@ obtener_dispositivo(_):-
   imprimir_usuario(usuario),readin(D),
   obtener_dispositivo(D).
 
-% conoce_el_problema/0
+%--------------------------
+%   conoce_el_problema/0
+%--------------------------
 % Realiza preguntas al usuario para determinar si conoce el problema
 conoce_el_problema:-
   imprimir_usuario(bot),write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
@@ -223,6 +288,9 @@ conoce_el_problema:-
   readin(S),
   conoce_el_problema(S),!.
 
+%--------------------------
+%   conoce_el_problema/0
+%--------------------------
 % Si se conoce el problema, solicita la causa y luego lo soluciona
 conoce_el_problema(S):-
   afirmativo(S), !,
@@ -231,6 +299,9 @@ conoce_el_problema(S):-
   imprimir_usuario(usuario),readin(M),append(M,[' n'],P),
   verificar_problema(P).
 
+%--------------------------
+%   conoce_el_problema/0
+%--------------------------
 % Si no lo conoce, se procede a realizar obtener_problema
 conoce_el_problema(S):-
   negativo(S), !,
@@ -238,17 +309,24 @@ conoce_el_problema(S):-
   write(' No hay problema,le ayudare a encontrarlo\n'),
   obtener_problema.
 
-% Clausa de salida del bucle de deteccion de problemas
+%--------------------------
+%   conoce_el_problema/0
+%--------------------------
+% Salida del bucle de deteccion de problemas
 conoce_el_problema(S):-
   member('salir',S), !.
 
+%--------------------------
+%   conoce_el_problema/0
+%--------------------------
 % Si el usuario no ingresa si o no, le pide que ingrese una
 conoce_el_problema(_):-
   imprimir_usuario(bot),
   write('Es necesario que responda las preguntas con "si" o "no". Intente nuevamente'),
   readin(S), conoce_el_problema(S).
-
-% obtener_problema/0
+%--------------------------
+%   obtener_problema/0
+%--------------------------
 obtener_problema:-
   imprimir_usuario(bot),
   write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
@@ -256,10 +334,17 @@ obtener_problema:-
   preguntas_base(Disp,PP),
   length(PP,N),obtener_problema(N).
 
-% obtener_problema/1
+%--------------------------
+%   obtener_problema/1
+%--------------------------
+
 obtener_problema(0):-
   imprimir_usuario(bot),
   write('Lo sentimos, no puedo encontrar su problema en mi base de datosLo lamento\n'),!.
+
+%--------------------------
+%   obtener_problema/1
+%--------------------------
 
 obtener_problema(N):-
   integer(N),!,
@@ -422,6 +507,5 @@ es_causa(S,N):-
 es_caso_especial(S,N):-
   dispositivo(D),n_elemento(D,1,Disp),
   modeloProbRef(Disp,S,_,N).
-%------------------ FIN DEL CODIGO ----------------------
 
-:- consultar.
+:- consultar. %Cierre del programa
