@@ -24,7 +24,7 @@ saludar:-
   respuestas(saludo, D),
   respuesta_aleatoria(D, W),
   imprimir_usuario(bot),
-  imprimir_lista(W),
+  mostrar_lista(W),
   imprimir_usuario(usuario),
   readin(_),
   ofrecer_ayuda.
@@ -39,7 +39,7 @@ conversacion:-
   append(S,[' n'],M),
   generar_respuesta(M,R),
   imprimir_usuario(bot),
-  imprimir_lista(R),
+  mostrar_lista(R),
     salir(S),!.
 
 %--------------------- RESPUESTAS ------------------------
@@ -181,7 +181,7 @@ respuesta_aleatoria(Res, R):-
     length(Res, Longitud),
     Mayor is Longitud + 1,
     random(1, Mayor, Rand),
-    nElemento(Res, Rand, R).
+    n_elemento(Res, Rand, R).
 
 %----------------------- OBTENER -------------------------
 % ofrecer_ayuda/0
@@ -190,14 +190,14 @@ ofrecer_ayuda:-
   respuestas(listo,RL),
   respuesta_aleatoria(RL,R),
   imprimir_usuario(bot),
-  imprimir_lista(R).
+  mostrar_lista(R).
 
 % obtener_dispositivo/0
 % Le pide al usuario un dispositivo vÃ¡lido.
 obtener_dispositivo:-
   preguntas_db(dispositivo,LP),
   respuesta_aleatoria(LP,P),
-  imprimir_usuario(bot),imprimir_lista(P),
+  imprimir_usuario(bot),mostrar_lista(P),
   imprimir_usuario(usuario),readin(S),
   obtener_dispositivo(S).
 
@@ -211,7 +211,7 @@ obtener_dispositivo(D):-
 obtener_dispositivo(_):-
   respuestas(obtener_dispositivo,LR),
   respuesta_aleatoria(LR,RA),
-  imprimir_usuario(bot),imprimir_lista(RA),
+  imprimir_usuario(bot),mostrar_lista(RA),
   imprimir_usuario(usuario),readin(D),
   obtener_dispositivo(D).
 
@@ -252,7 +252,7 @@ conoce_el_problema(_):-
 obtener_problema:-
   imprimir_usuario(bot),
   write('Por favor, responde a la siguiente pregunta con "si" o "no" \n'),
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   preguntas_db(Disp,PP),
   length(PP,N),obtener_problema(N).
 
@@ -263,18 +263,18 @@ obtener_problema(0):-
 
 obtener_problema(N):-
   integer(N),!,
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   preguntas_db(Disp,PP),
-  nElemento(PP,N,PG),
+  n_elemento(PP,N,PG),
   imprimir_usuario(bot),
-  imprimir_lista(PG),
+  mostrar_lista(PG),
   readin(S),obtener_problema(S,N).
 
 % obtener_problema/2
 obtener_problema(S,N):-
   negativo(S),!,
   brindar_solucion(N,R),
-  imprimir_lista(R).
+  mostrar_lista(R).
 
 obtener_problema(S,N):-
   afirmativo(S),!,
@@ -295,47 +295,47 @@ obtener_problema(_,_):-
 resolver_consulta:-
   imprimir_usuario(bot),
   write('Es posible que su problema se deba a las siguientes causas:\n'),
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   causas_db(Disp,LS),
   length(LS,N),
-  imprimir_ul(N,LS),!.
+  mostrar_listacero(N,LS),!.
 
 % brindar_referencias/0
 % Brinda al usuario todas las referencias de un dispositivo.
 brindar_referencias:-
   imprimir_usuario(bot),write('Esta referencia podria ayudarle con su problema: \n'),
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   referencias(Disp,LR),
-  length(LR,N),imprimir_ul(N,LR),!.
+  length(LR,N),mostrar_listacero(N,LR),!.
 
 % brindar_referencia/1
 % Brinda una o varias referencias asociadas a un problema.
 brindar_referencia(N):-
   integer(N),!,
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   referencias(Disp,LRF),
-  nElemento(LRF,N,RF),
-  imprimir_lista(RF).
+  n_elemento(LRF,N,RF),
+  mostrar_lista(RF).
 
 brindar_referencia(N):-
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   referencias(Disp,LRF),
-  imprimir_seleccion(LRF,N),!.
+  mostrar_seleccion(LRF,N),!.
 
 % brindar_solucion/2
 % Brinda una o varias referencias asociadas a un problema.
 brindar_solucion(N,S):-
   integer(N),!,
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   respuestas(Disp,LRF),
-  nElemento(LRF,N,S).
+  n_elemento(LRF,N,S).
 
 % brindar_solucion/1
 brindar_solucion(N):-
   imprimir_usuario(bot),write('\n'),
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   respuestas(Disp,LRF),
-  imprimir_seleccion(LRF,N),!.
+  mostrar_seleccion(LRF,N),!.
 
 %----------------------- AUX FX --------------------------
 % Nota: en un predicado se usa la notaciÃ³n:
@@ -354,7 +354,7 @@ n_usuario('Usuario').
 % Verifica si la oraciÃ³n es un saludo en la DB
 buscar_saludo(S):-
   saludos(D),
-  interseca(S, D, A),
+  intersecar(S, D, A),
   A \== [].
 
 % buscar_pregunta/1
@@ -366,7 +366,7 @@ buscar_pregunta(S):-
 % Verifica si la oraciÃ³n es de agradecimiento en la DB
 buscar_gracias(S):-
   gracias(D),
-  interseca(S, D, A),
+  intersecar(S, D, A),
   A \== [].
 
 % afirmativo/1
@@ -382,7 +382,7 @@ negativo(S):-
 % salir/1
 % Verifica si la entrada contiene la frase de despedida
 salir(S):-
-    subset([adios], S).
+    sub_conjunto([adios], S).
 
 %modificado-se quitó nombre
 
@@ -390,7 +390,7 @@ salir(S):-
 % Verifica si el dispositivo es valido, y lo agrega a la base de datos actual.
 verificar_dispositivo(S):-
   dispositivos(D),
-  interseca(S, D, A),
+  intersecar(S, D, A),
   A \== [],
   assert(dispositivo(A)).
 
@@ -399,7 +399,7 @@ verificar_dispositivo(S):-
 verificar_problema(S):-
   es_causa(S,N),!,
   brindar_solucion(N,R),
-  imprimir_lista(R).
+  mostrar_lista(R).
 
 verificar_problema(S):-
   es_caso_especial(S,N),!,
@@ -409,18 +409,18 @@ verificar_problema(_):-
   respuestas(problema,LP),
   respuesta_aleatoria(LP,RA),
   imprimir_usuario(bot),
-  imprimir_lista(RA),fail.
+  mostrar_lista(RA),fail.
 
 % es_causa/2
 % Indica si en una oraciÃ³n se da una causa principal
 es_causa(S,N):-
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   patronCausa(Disp,S,_,N).
 
 % es_caso_especial/?
 % Indica si se hace request de un problema especÃ­fico
 es_caso_especial(S,N):-
-  dispositivo(D),nElemento(D,1,Disp),
+  dispositivo(D),n_elemento(D,1,Disp),
   patronProbRef(Disp,S,_,N).
 %------------------ FIN DEL CODIGO ----------------------
 

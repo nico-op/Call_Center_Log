@@ -18,60 +18,60 @@ contiene(A, B) :-
     name(A, AA),
     contiene(AA, B).
 contiene(A, B) :-
-    sublista(B, A),
+    sub_lista(B, A),
     B \= [].
 
-% imprimir_lista/1
+% mostrar_lista/1
 % Tiene como funcion imprimer unalista que seria la oracion pero eliminando de ella las comas o corchetes
-imprimir_lista([]):- nl.
-imprimir_lista([H|T]):-
+mostrar_lista([]):- nl.
+mostrar_lista([H|T]):-
     write(H),
     write(' '),
-    imprimir_lista(T).
+    mostrar_lista(T).
 
-% imprimir_ul/2
+% mostrar_listacero/2
 % Tiene como funcion el imprimer el contenido de una lista como una unsorted
-imprimir_ul(0,_).
-imprimir_ul(N,L):-
-  nElemento(L, N, R),
-  write('\t* '), imprimir_lista(R),
+mostrar_listacero(0,_).
+mostrar_listacero(N,L):-
+  n_elemento(L, N, R),
+  write('\t* '), mostrar_lista(R),
   M is N - 1,
-  imprimir_ul(M,L).
+  mostrar_listacero(M,L).
 
-% imprimir_seleccion/2
+% mostrar_seleccion/2
 % Tiene como funcion imprimir el contenido de los indices 
-imprimir_seleccion(_,[]).
-imprimir_seleccion(L,[N1|NX]):-
-  nElemento(L, N1, R),
-  write('\t* '), imprimir_lista(R),
-  imprimir_seleccion(L,NX).
+mostrar_seleccion(_,[]).
+mostrar_seleccion(L,[N1|NX]):-
+  n_elemento(L, N1, R),
+  write('\t* '), mostrar_lista(R),
+  mostrar_seleccion(L,NX).
 
-% interseca(Set1, Set2, SubSet)
-% Tiene como funcion examinar si subset se une con set1 y set2 
-interseca([], _, []).
-interseca([H|T1], L2, [H|T3]):-
+% intersecar(Set1, Set2, sub_conjunto)
+% Tiene como funcion examinar si sub_conjunto se une con set1 y set2 
+intersecar([], _, []).
+intersecar([H|T1], L2, [H|T3]):-
         member(H, L2), !,
-        interseca(T1, L2, T3).
-interseca([_|T1], L2, L3):-
-        interseca(T1, L2, L3).
+        intersecar(T1, L2, T3).
+intersecar([_|T1], L2, L3):-
+        intersecar(T1, L2, L3).
 
-% nElemento(List, N, Elemento)
+% n_elemento(List, N, Elemento)
 % Tiene como funcion detectar si el enesimo elemento de la lista es un elemento, en caso de que si
 % devuelve true 
-nElemento([H|_], 1, H).
-nElemento([_|T], N, X):-
-    nElemento(T, N1, X),
+n_elemento([H|_], 1, H).
+n_elemento([_|T], N, X):-
+    n_elemento(T, N1, X),
     N is N1 + 1.
 
-% sublista(SubLista, Lista)
-% Se hace la definicion de que es una sublista
-sublista(S, L) :-
+% sub_lista(sub_lista, Lista)
+% Se hace la definicion de que es una sub_lista
+sub_lista(S, L) :-
     append(_, L2, L),
     append(S, _, L2).
 
-% subset(SubSet, Set)
-% Si subset forma parte de set devuelve true 
-subset([], _).
-subset([H|T], L2):-
+% sub_conjunto(sub_conjunto, Set)
+% Si sub_conjunto forma parte de set devuelve true 
+sub_conjunto([], _).
+sub_conjunto([H|T], L2):-
     member(H, L2),
-    subset(T, L2).
+    sub_conjunto(T, L2).
