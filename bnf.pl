@@ -146,7 +146,7 @@ adjetivo([tu|S], S).
 %-----------------------------
 %        ADVERBIOS
 %-----------------------------
-% Los adverbios son una parte de la oraci�n que complementa a un verbo,
+% Los adverbios son una parte de la oracion que complementa a un verbo,
 % adjetivo, u otros adverbios e incluso oraciones.Se
 % necesitaran los siguientes:
 
@@ -162,6 +162,7 @@ adverbio([nada|S], S).
 adverbio([poco|S], S).
 adverbio([si|S], S).
 adverbio([tambien|S], S).
+
 
 %-----------------------------
 %        DETERMINANTES
@@ -197,10 +198,11 @@ determinante(plu, masc, _, [varios|S], S).
 determinante(plu, fem, _, [varias|S], S).
 
 
+
 %--------------------------------
 %    INTERROGANTES/PREGUNTAS
 %--------------------------------
-%Aqui se colocan las preguntas que seran utilizadas:
+% Aqui se colocan las preguntas que seran utilizadas:
 
 pregunta([a, donde|S], S).
 pregunta([cuanto|S], S).
@@ -215,12 +217,11 @@ pregunta([por|S], S).
 pregunta([que|S], S).
 pregunta([quien|S], S).
 
-
 %------------------------------
 %         PRONOMBRES
 %------------------------------
 % Los pronombres son palabras que reemplazan al sustantivo en
-% una oraci�n y evitan tener que mencionarlo directamente.
+% una oracion y evitan tener que mencionarlo directamente.
 %Los Pronombres personales que seran usados en la base de datos son:
 
 pronombre(sing,masc, tercera, [el|S], S).
@@ -251,7 +252,7 @@ pronombre([te|S], S).
 %          SUSTANTIVOS
 %--------------------------------
 % Un sustantivo se utiliza para nombrar cosas, personas o animales,
-% ej:perro,lapiz, juan
+% ej:perro,lapiz, j
 % Aqui se encuentran los sustantivos incluidos en callcenterlog
 
 sustantivo(sing,masc,[adaptador|S],S).
@@ -268,6 +269,7 @@ sustantivo(sing,masc,[dns|S],S).
 sustantivo(plu,masc,[drivers|S],S).
 sustantivo(sing,masc,[error|S],S).
 sustantivo(sing,fem,[electricidad|S],S).
+sustantivo(sing,masc,[ethernet|S],S).
 sustantivo(sing,masc,[fluido|S],S).
 sustantivo(sing,masc,[interrupcion|S],S).
 sustantivo(plu,fem,[interrupciones|S],S).
@@ -290,6 +292,7 @@ sustantivo(sing,fem,[solucion|S],S).
 sustantivo(sing,fem,[tarjeta|S],S).
 sustantivo(sing,masc,[wifi|S],S).
 sustantivo(sing,fem,[zona|S],S).
+
 
 
 %-----------------------------------
@@ -392,8 +395,6 @@ verbo(sing, tercera, [necesita|S], S).
 verbo(sing, segunda, [necesita|S], S).
 
 
-%�
-
 %O
 verbo(sing,segunda,[ocurrido|S], S).
 verbo(sing,tercera,[ocurrido|S], S).
@@ -457,6 +458,7 @@ verbo(sing,segunda,[verifique|S], S).
 
 %W
 %X
+%Y
 %Y
 
 
