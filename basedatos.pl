@@ -126,7 +126,7 @@ referencias(computadora, [
 
 saludos([hola,buenas_tardes,buenos_dias]).
 
-gracias([gracias,muchas_gracias,okay]).
+gracias([gracias,muchas_gracias,okay, entendido]).
 
 dispositivos([computadora]).
 
