@@ -1,10 +1,9 @@
-% Archivo:      patrones-modificado.pl
-%
-% Descripción:  Busca patrones especiales en la comunicación con el usuario.
-
+%----------------------------------------------------------------------
+%               SISTEMA EXPERTO (Detecta Patrones en las oraciones)
+%----------------------------------------------------------------------
 
 % patronConsulta/2
-% Busca patrones que indican que el usuario está realizando
+% Busca patrones que indican que el usuario esta realizando
 % una consulta.
 
 % Consulta
@@ -24,14 +23,14 @@ patronConsulta([causas, X|_],X):-!.
 patronConsulta([causa, X|_],X):-!.
 patronConsulta([que, puede, causar, X|_],X):-!.
 
-% ¿Por qué?
+% Why?
 patronConsulta([por, que, X|_],X):-!.
 
 patronConsulta([_|T],X):-
   patronConsulta(T,X).
 
 % patronReferencia/2
-% Busca patrones que indican que el usuario está solicitando
+% Busca patrones que indican que el usuario estÃ¡ solicitando
 % una Referencia.
 
 % Referencia
@@ -69,7 +68,7 @@ patronProblema([funciona, mal, X |_], X):- !.
 patronProblema([funcionan, mal, X |_], X):- !.
 patronProblema([funcionar, X |_], X):- !.
 
-%~ daños
+% danos
 patronProblema([esta, danado, X|_], X):- !.
 patronProblema([estan, danados, X|_], X):- !.
 patronProblema([esta, danada, X|_], X):- !.
@@ -98,30 +97,32 @@ patronProblema([_|T], X):-
   patronProblema(T, X).
 
 % patronProbRef/4
-
+%
 % Problema-Referencia de computadora
 patronProbRef(computadora,[no, trabaja, X|_],X, [10,9,4]):- !.
 
+patronProbRef(D,[_|T],X,N):-
+  patronProbRef(D,T,X,N).
 
 % patronCausa/4
 % para que estos patrones funcionen, se necesita un punto al final
 % Busca patrones en las causas de un problemas
 
-
 % Causas computadora
-patronCausa(computadora, [esta, descargada, X |_], X, NS):-! ,NS is 10.
-patronCausa(computadora, [no, enciende, X |_], X, NS):- !, NS is 9.
-patronCausa(computadora, [no, esta, encendida, X |_], X, NS):-!, NS is 9.
-patronCausa(computadora, [no, responde, X |_], X, NS):- !, NS is 8.
-patronCausa(computadora, [no, esta, actualizada, X |_], X, NS):-!, NS is 7.
-patronCausa(computadora, [no, esta, conectada, al, wifi, X |_], X, NS):-!, NS is 6.
-patronCausa(computadora, [esta, desconectada, de, sus, datos, X |_], X, NS):-!, NS is 5.
-patronCausa(computadora, [esta, llena, X |_], X, NS):-!, NS is 4.
-patronCausa(computadora, [volumen, bajo, X |_], X, NS):-!, NS is 3.
-patronCausa(computadora, [esta, sucia, X |_], X, NS):- !, NS is 2.
-patronCausa(computadora, [esta, vieja, X |_], X, NS):- !, NS is 1.
+patronCausa(computadora, [no, esta, conectada, al, wifi, X |_], X, NS):-!, NS is 1.
+patronCausa(computadora, [no, funciona, wifi, X |_], X, NS):-!, NS is 2.
+patronCausa(computadora, [no, esta, conectado, cable, ethernet, X |_], X, NS):-!, NS is 3.
+patronCausa(computadora, [el, cable, de, red, es, disfuncional, X |_], X, NS):-!, NS is 4.
+patronCausa(computadora, [cortes, de, electricidad, en, la, zona, se, cae, el, internet, X |_], X, NS):-!, NS is 5.
+patronCausa(computadora, [interrupcion, de,  servicio, en, la,  zona,  X |_], X, NS):-!, NS is 6.
+patronCausa(computadora, [el, antivirus, puede,  estar , bloqueando, el, acceso, a , internet,  X |_], X, NS):-!, NS is 7.
+patronCausa(computadora, [la,  direccion,  ip , o,  dns, puede, estar, mal, configurados, X |_], X, NS):-!, NS is 8.
+patronCausa(computadora, [no,  tiene,  instalados, drivers,  wifi, X |_], X, NS):-!, NS is 9.
+patronCausa(computadora, [el, adaptador, de, red, de, la , computadora, no, funciona, X |_], X, NS):-!, NS is 10.
+patronCausa(computadora, [tarjeta,  de,  red, mala,  X |_], X, NS):-!, NS is 11.
 
 
-% patronCausa( Dispositivo, Oración, Comparador, Número de Solución).
+
+% patronCausa( Dispositivo, Lista, Comparador, Numero de Solucion).
 patronCausa(D, [_|T], X, NS):-
   patronCausa(D, T, X, NS).
