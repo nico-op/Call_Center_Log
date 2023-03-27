@@ -47,7 +47,7 @@ conversacion:-
 % A) RESPUESTAS A UNA CONSULTA
 % Si en la misma frase el usuario ya indica el dispositivo
 generar_respuesta(S,R):-
-  patronConsulta(S,_),
+  modeloConsulta(S,_),
   verificar_dispositivo(S),!,
   assert(solicitud(consulta)),
   resolver_consulta,
@@ -57,7 +57,7 @@ generar_respuesta(S,R):-
 % Si no menciona el dispositivo, en la consulta, se procede a
 % preguntarlo
 generar_respuesta(S,R):-
-  patronConsulta(S,_),!,
+  modeloConsulta(S,_),!,
   assert(solicitud(consulta)),
   obtener_dispositivo,
   resolver_consulta,
@@ -69,7 +69,7 @@ generar_respuesta(S,R):-
 % B) RESPUESTAS A UNA REFERENCIA
 % Si en la misma frase el usuario ya indica el dispositivo y el problema
 generar_respuesta(S,R):-
-  patronReferencia(S,_), verificar_dispositivo(S),
+  modeloReferencia(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
   assert(solicitud(referencia)),
   imprimir_usuario(bot),write('Esta referencia puede ayudarte a resolver el problema: '),
@@ -79,7 +79,7 @@ generar_respuesta(S,R):-
 
 % Si en la misma frase el usuario ya indica el dispositivo y el problema
 generar_respuesta(S,R):-
-  patronReferencia(S,_),
+  modeloReferencia(S,_),
   verificar_dispositivo(S),
   es_caso_especial(S,N),!,
   assert(solicitud(referencia)),
@@ -90,7 +90,7 @@ generar_respuesta(S,R):-
 
 % Si el usuario solo brinda el dispositivo
 generar_respuesta(S,R):-
-  patronReferencia(S,_),
+  modeloReferencia(S,_),
   verificar_dispositivo(S),!,
   assert(solicitud(referencia)),
   brindar_referencias,
@@ -99,7 +99,7 @@ generar_respuesta(S,R):-
 
 % Si no dice ni dispositivo, ni problema se brindan todas.
 generar_respuesta(S,R):-
-  patronReferencia(S,_),!,
+  modeloReferencia(S,_),!,
   assert(solicitud(referencia)),
   obtener_dispositivo,
   brindar_referencias,
@@ -111,13 +111,13 @@ generar_respuesta(S,R):-
 % El usuario indica que tiene un problema, el dispositivo y dice cual
 % es la causa (sea especifica o general).
 generar_respuesta(S,R):-
-  patronProblema(S,_), verificar_dispositivo(S),
+  modeloProblema(S,_), verificar_dispositivo(S),
   es_causa(S,N),!,
   assert(solicitud(problema)),
   brindar_solucion(N,R).
 
 generar_respuesta(S,R):-
-  patronProblema(S,_), verificar_dispositivo(S),
+  modeloProblema(S,_), verificar_dispositivo(S),
   es_caso_especial(S,N),!,
   assert(solicitud(problema)),
   brindar_solucion(N),
@@ -126,7 +126,7 @@ generar_respuesta(S,R):-
 
 % El usuario indica que tiene un problema y el dispositivo.
 generar_respuesta(S,R):-
-  patronProblema(S,_), verificar_dispositivo(S),!,
+  modeloProblema(S,_), verificar_dispositivo(S),!,
   assert(solicitud(problema)),
   conoce_el_problema,
   respuestas(fin_oracion,LR),
@@ -134,7 +134,7 @@ generar_respuesta(S,R):-
 
 % El usuario solo indica que tiene un problema.
 generar_respuesta(S,R):-
-  patronProblema(S,_), !,
+  modeloProblema(S,_), !,
   assert(solicitud(problema)),
   obtener_dispositivo,
   conoce_el_problema,
@@ -415,13 +415,13 @@ verificar_problema(_):-
 % Indica si en una oraciÃ³n se da una causa principal
 es_causa(S,N):-
   dispositivo(D),n_elemento(D,1,Disp),
-  patronCausa(Disp,S,_,N).
+  modeloCausa(Disp,S,_,N).
 
 % es_caso_especial/?
 % Indica si se hace request de un problema especÃ­fico
 es_caso_especial(S,N):-
   dispositivo(D),n_elemento(D,1,Disp),
-  patronProbRef(Disp,S,_,N).
+  modeloProbRef(Disp,S,_,N).
 %------------------ FIN DEL CODIGO ----------------------
 
 :- consultar.
